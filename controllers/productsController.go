@@ -80,3 +80,16 @@ func UpdateProduct(c *gin.Context) {
 		"product": product,
 	})
 }
+
+func DeleteProduct(c *gin.Context) {
+
+	id := c.Param("id")
+
+	result := initializers.DB.Delete(&models.Product{}, id)
+	if result.Error != nil {
+		c.Status(400)
+		return
+	}
+
+	c.Status(200)
+}
