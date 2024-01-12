@@ -21,7 +21,36 @@ func CreateProduct(c *gin.Context) {
 		c.Status(400)
 		return
 	}
-	//result.RowsAffected
+
+	c.JSON(200, gin.H{
+		"product": product,
+	})
+}
+
+func GetProducts(c *gin.Context) {
+
+	var products []models.Product
+	result := initializers.DB.Find(&products)
+	if result.Error != nil {
+		c.Status(400)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"products": products,
+	})
+}
+
+func GetProductById(c *gin.Context) {
+
+	id := c.Param("id")
+
+	var product models.Product
+	result := initializers.DB.Find(&product, id)
+	if result.Error != nil {
+		c.Status(400)
+		return
+	}
 
 	c.JSON(200, gin.H{
 		"product": product,
