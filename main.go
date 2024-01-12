@@ -17,6 +17,7 @@ func main() {
 	r.POST("/products", controllers.CreateProduct)
 	r.GET("/products", controllers.GetProducts)
 	r.GET("/products/:id", controllers.GetProductById)
+	r.PUT("/products/:id", controllers.UpdateProduct)
 
 	r.Run()
 }

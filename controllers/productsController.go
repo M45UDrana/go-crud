@@ -56,3 +56,27 @@ func GetProductById(c *gin.Context) {
 		"product": product,
 	})
 }
+
+func UpdateProduct(c *gin.Context) {
+
+	id := c.Param("id")
+
+	var body struct {
+		Code  string
+		Price uint
+	}
+
+	c.Bind(&body)
+
+	var product models.Product
+	initializers.DB.Find(&product, id)
+	result := initializers.DB.Model(&product).Updates(models.Product{Code: body.Code, Price: body.Price})
+	if result.Error != nil {
+		c.Status(400)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"product": product,
+	})
+}
